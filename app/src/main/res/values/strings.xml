@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">APP BOLG</string>
+    <string name="str_login_page">로그인 페이지</string>
+    <string name="label_login">input user id</string>
+    <string name="label_pw">input user pw</string>
+    <string name="str_login">로그인하기</string>
+    <string name="str_is_signup">아직 회원 가입이 안되어있나요?</string>
+    <string name="str_signup">회원가입페이지</string>
+    <string name="label">user id</string>
+    <string name="email">user email</string>
+    <string name="password">input password</string>
+    <string name="rePassword">check password</string>
+    <string name="str_signUp_btn">회원가입</string>
+    <string name="go_signUpPage">로그인페이지로 돌아가기</string>
+    <string name="text_label_1">list</string>
+    <string name="text_label_2">users</string>
+    <string name="text_label_3">web</string>
+    <string name="text_label_4">my info</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="str_update">update</string>
+    <string name="str_delete">delete</string>
+    <string name="str_save">save</string>
+    <string name="str_update_ok">수정완료</string>
+    <string name="str_connect_fail">잘못된접근입니다.</string>
+</resources>
