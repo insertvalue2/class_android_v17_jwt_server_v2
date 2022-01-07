@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.koreait.myjwtapp.interfaces.OnBlogListRefresh;
 import com.koreait.myjwtapp.repository.JwtService;
 import com.koreait.myjwtapp.repository.models.request.ReqPost;
 import com.koreait.myjwtapp.repository.models.response.ResPost;
@@ -35,6 +36,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private ResPost.Data data;
     private String myId;
+    private OnBlogListRefresh onBlogListRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
