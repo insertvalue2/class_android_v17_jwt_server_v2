@@ -1,15 +1,20 @@
 package com.koreait.myjwtapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.koreait.myjwtapp.interfaces.OnBlogListRefresh;
 import com.koreait.myjwtapp.repository.JwtService;
@@ -42,7 +47,6 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
 
         if (getIntent() != null) {
             data = (ResPost.Data) getIntent().getSerializableExtra("postData");
@@ -88,17 +92,20 @@ public class DetailActivity extends AppCompatActivity {
         });
 
         blogDeleteBtn.setOnClickListener(view -> {
-            jwtService.deletePost(BlogUtil.getToken(view.getContext()), data.id).enqueue(new Callback<Result>() {
-                @Override
-                public void onResponse(Call<Result> call, Response<Result> response) {
-                    Snackbar.make(view, response.body().getMsg(), Snackbar.LENGTH_SHORT).show();
-                }
 
-                @Override
-                public void onFailure(Call<Result> call, Throwable t) {
-                    Snackbar.make(view, view.getContext().getResources().getString(R.string.str_connect_fail), Snackbar.LENGTH_SHORT).show();
-                }
-            });
+            new MaterialAlertDialogBuilder(this)
+                    .setTitle("게시글 삭제")
+                    .setMessage("해당 글을 삭제 하시겠습니까?")
+                    .setNegativeButton("취소", (dialogInterface, i) -> {
+                        dialogInterface.dismiss();
+                    })
+                    .setPositiveButton("삭제", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Log.d(TAG, "i : " + i);
+                            requestDeletePost(view, getApplicationContext());
+                        }
+                    }).show();
         });
 
         blogUpdateOkBtn.setOnClickListener(new OnSingleClickListener() {
@@ -123,6 +130,20 @@ public class DetailActivity extends AppCompatActivity {
                                 .getString(R.string.str_connect_fail), Snackbar.LENGTH_SHORT).show();
                     }
                 });
+            }
+        });
+    }
+
+    private void requestDeletePost(View view, Context context) {
+        jwtService.deletePost(BlogUtil.getToken(context), data.id).enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+                Snackbar.make(view, response.body().getMsg(), Snackbar.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                Snackbar.make(view, view.getContext().getResources().getString(R.string.str_connect_fail), Snackbar.LENGTH_SHORT).show();
             }
         });
     }

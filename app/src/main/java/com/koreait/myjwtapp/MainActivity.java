@@ -1,4 +1,8 @@
-package com.koreait.myjwtapp;
+  package com.koreait.myjwtapp;
+
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,21 +10,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.Toast;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.koreait.myjwtapp.interfaces.OnBlogListRefresh;
-import com.koreait.myjwtapp.repository.JwtService;
-import com.koreait.myjwtapp.repository.models.response.ResPost;
 import com.koreait.myjwtapp.utils.FragmentType;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements OnBlogListRefresh {
 
@@ -31,7 +24,8 @@ public class MainActivity extends AppCompatActivity implements OnBlogListRefresh
     BottomNavigationView bottomNavigationView;
 
     @Override
-    public void refresh() {
+    public void refresh(String msg) {
+
         addFragment(FragmentType.BLOG_LIST);
         blogListFragment.listRefresh();
     }
@@ -54,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements OnBlogListRefresh
     private void initData() {
         blogListFragment = new BlogListFragment();
         userListFragment = new UserListFragment();
-        webFragment = new WebFragment((OnBlogListRefresh) this);
+        webFragment = new WebFragment(this);
         myInfoFragment = new MyInfoFragment();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
     }

@@ -1,14 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MyInfoFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/userImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/purple_200"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/userNameTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="userName"
+            app:layout_constraintBottom_toTopOf="@id/userEmailTv"
+            app:layout_constraintStart_toEndOf="@id/userImage"
+            app:layout_constraintTop_toTopOf="@id/userImage" />
+
+        <TextView
+            android:id="@+id/userEmailTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="userEmail"
+            app:layout_constraintBottom_toBottomOf="@id/userImage"
+            app:layout_constraintStart_toStartOf="@id/userNameTv"
+            app:layout_constraintTop_toBottomOf="@id/userNameTv" />
+
+        <Button
+            android:id="@+id/myInfoUpdateBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="@color/purple_200"
+            android:text="프로필 수정"
+            app:layout_constraintEnd_toStartOf="@id/logoutBtn"
+            app:layout_constraintHorizontal_weight="2"
+            app:layout_constraintStart_toStartOf="@id/userImage"
+            app:layout_constraintTop_toBottomOf="@id/userImage" />
+
+        <Button
+            android:id="@+id/logoutBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:backgroundTint="@color/purple_200"
+            android:text="로그아웃"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/myInfoUpdateBtn"
+            app:layout_constraintTop_toTopOf="@id/myInfoUpdateBtn" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </FrameLayout>

@@ -60,6 +60,10 @@ public class LoginActivity extends AppCompatActivity {
                             SharedPreferences preferences = getSharedPreferences("token", MODE_PRIVATE);
                             SharedPreferences.Editor editor = preferences.edit();
                             editor.putString("jwt", response.headers().get("Authorization"));
+                            Log.d(TAG, "session : " + response.headers().get("Set-Cookie"));
+                            Log.d(TAG, "session : " + response.headers().get("Connection"));
+                            Log.d(TAG, "session : " + response.headers().get("Transfer-Encoding"));
+
                             // 추가
                             editor.putString("username", resLogin.getData().getId().toString());
                             editor.putString("userId", resLogin.getData().getId().toString());

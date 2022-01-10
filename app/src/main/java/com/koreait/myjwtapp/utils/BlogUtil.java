@@ -12,4 +12,9 @@ public class BlogUtil {
         SharedPreferences preferences = context.getSharedPreferences("token", MODE_PRIVATE);
         return preferences.getString("jwt", "");
     }
+
+    public static String getMyId(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("token", MODE_PRIVATE);
+        return preferences.getString("userId", "");
+    }
 }

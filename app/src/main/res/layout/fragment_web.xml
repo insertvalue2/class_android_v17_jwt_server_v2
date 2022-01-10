@@ -32,7 +32,7 @@
                 app:layout_constraintVertical_chainStyle="packed">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/detailTitleEt"
+                    android:id="@+id/writeTitleEt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
@@ -53,7 +53,7 @@
                 app:layout_constraintTop_toBottomOf="@id/textFieldTitle">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/detailContentEt"
+                    android:id="@+id/writeContentEt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start|top"

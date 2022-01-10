@@ -37,7 +37,7 @@ public interface JwtService {
     Call<ResPost> getPostList(@Header("Authorization") String token);
 
     @POST("post")
-    Call<ResPost> savePost(@Header("Authorization") String token, @Body ReqPost reqPost );
+    Call<ResUpdatePost> savePost(@Header("Authorization") String token, @Body ReqPost reqPost);
 
     @PUT("post/{postId}")
     Call<ResUpdatePost> updatePost(@Header("Authorization") String token, @Body ReqPost reqPost, @Path("postId") int postId);
@@ -45,6 +45,8 @@ public interface JwtService {
     @DELETE("post/{postId}")
     Call<Result> deletePost(@Header("Authorization") String token, @Path("postId") int postId);
 
+    @GET("user/{myId}")
+    Call<ResLogin> myInfo(@Header("Authorization") String token, @Path("myId") int myId);
 
 
     // ipconfig / ifconfig
