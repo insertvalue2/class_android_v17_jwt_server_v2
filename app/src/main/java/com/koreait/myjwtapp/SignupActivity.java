@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.koreait.myjwtapp.databinding.ActivitySignup2Binding;
 import com.koreait.myjwtapp.repository.JwtService;
 import com.koreait.myjwtapp.repository.models.request.ReqSignup;
 import com.koreait.myjwtapp.repository.models.response.ResSignup;
@@ -21,26 +22,27 @@ import retrofit2.Response;
 public class SignupActivity extends AppCompatActivity {
 
     static final String TAG = SignupActivity.class.getName();
+    ActivitySignup2Binding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup2);
+        binding = ActivitySignup2Binding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        EditText userIdEt = findViewById(R.id.userIdEt);
-        EditText userEmailEt = findViewById(R.id.userEmailEt);
-        EditText passwordEt = findViewById(R.id.passwordEt);
-        EditText rePasswordEt = findViewById(R.id.rePasswordEt);
+//        EditText userIdEt = findViewById(R.id.userIdEt);
+//        EditText userEmailEt = findViewById(R.id.userEmailEt);
+//        EditText passwordEt = findViewById(R.id.passwordEt);
+//        EditText rePasswordEt = findViewById(R.id.rePasswordEt);
+//        Button signUpBtn = findViewById(R.id.signUpBtn);
+//        TextView goSignInPage = findViewById(R.id.goSignInPage);
 
-        Button signUpBtn = findViewById(R.id.signUpBtn);
-        TextView goSignInPage = findViewById(R.id.goSignInPage);
-
-        signUpBtn.setOnClickListener(view -> {
+        binding.signUpBtn.setOnClickListener(view -> {
             // 지역변수
-            String id = userIdEt.getText().toString();
-            String pw = passwordEt.getText().toString();
-            String rePw = rePasswordEt.getText().toString();
-            String email = userEmailEt.getText().toString();
+            String id = binding.userIdEt.getText().toString();
+            String pw = binding.passwordEt.getText().toString();
+            String rePw = binding.rePasswordEt.getText().toString();
+            String email = binding.userEmailEt.getText().toString();
 
             if (id.length() > 3 && pw.length() > 3 && email.length() > 3) {
                 KeyboardUtil.hideKeyboard(view.getContext(), view);
@@ -77,7 +79,7 @@ public class SignupActivity extends AppCompatActivity {
 
         });
 
-        goSignInPage.setOnClickListener(view -> {
+        binding.goSignInPage.setOnClickListener(view -> {
             finish();
         });
 

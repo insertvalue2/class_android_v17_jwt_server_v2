@@ -78,7 +78,7 @@ public class WebFragment extends Fragment {
                     public void onResponse(Call<ResUpdatePost> call, Response<ResUpdatePost> response) {
                         writeTitleEt.setText("");
                         writeContentEt.setText("");
-                        onBlogListRefresh.refresh(response.body().msg);
+                        onBlogListRefresh.refresh(response.body().getMsg());
                     }
 
                     @Override

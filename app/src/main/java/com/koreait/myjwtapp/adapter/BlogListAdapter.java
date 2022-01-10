@@ -3,7 +3,6 @@ package com.koreait.myjwtapp.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,8 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.koreait.myjwtapp.DetailActivity;
 import com.koreait.myjwtapp.R;
-import com.koreait.myjwtapp.repository.models.response.ResPost;
+import com.koreait.myjwtapp.interfaces.OnBlogListRefresh;
+import com.koreait.myjwtapp.repository.models.response.common.Data;
 import com.koreait.myjwtapp.utils.OnSingleClickListener;
 
 import java.util.ArrayList;
@@ -31,13 +31,18 @@ import java.util.List;
 public class BlogListAdapter extends RecyclerView.Adapter<BlogListAdapter.ViewHolder> {
 
     private Context context;
-    private List<ResPost.Data> list = new ArrayList<>();
+    private List<Data> list = new ArrayList<>();
+    private OnBlogListRefresh onBlogListRefresh;
+
+    public void setOnBlogListRefresh(OnBlogListRefresh onBlogListRefresh) {
+        this.onBlogListRefresh = onBlogListRefresh;
+    }
 
     public BlogListAdapter(Context context) {
         this.context = context;
     }
 
-    public void setItemData(List<ResPost.Data> list) {
+    public void setItemData(List<Data> list) {
         this.list = list;
     }
 
@@ -51,7 +56,7 @@ public class BlogListAdapter extends RecyclerView.Adapter<BlogListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ResPost.Data data = list.get(position);
+        Data data = list.get(position);
         // https://picsum.photos/200/300?random=1
         Glide.with(holder.imageView.getContext())
                 .load("https://picsum.photos/200/300?random=" + position)
@@ -70,17 +75,19 @@ public class BlogListAdapter extends RecyclerView.Adapter<BlogListAdapter.ViewHo
                 })
                 .centerCrop()
                 .into(holder.imageView);
-        holder.titleTv.setText(data.title);
-        holder.userNameTv.setText(data.user.username);
-        holder.contentTv.setText(data.content);
+        holder.titleTv.setText(data.getTitle());
+        holder.userNameTv.setText(data.getUser().getUsername());
+        holder.contentTv.setText(data.getContent());
 
         // new OnSingleClickListener() <- 구글링 방식
         holder.itemView.setOnClickListener(new OnSingleClickListener() {
             @Override
             public void onSingleClick(View v) {
-                Intent intent = new Intent(context, DetailActivity.class);
-                intent.putExtra("postData", data);
-                context.startActivity(intent);
+
+                if (onBlogListRefresh != null) {
+                    onBlogListRefresh.movePage(data);
+                }
+
             }
         });
     }

@@ -1,15 +1,12 @@
-
 package com.koreait.myjwtapp.repository.models.response.common;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.koreait.myjwtapp.repository.models.response.ResPost;
 
 import java.io.Serializable;
 
 
-public class Data implements Serializable {
-
+public class User implements Serializable {
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -18,7 +15,7 @@ public class Data implements Serializable {
     private String username;
     @SerializedName("password")
     @Expose
-    private Object password;
+    private String password;
     @SerializedName("email")
     @Expose
     private String email;
@@ -28,15 +25,6 @@ public class Data implements Serializable {
     @SerializedName("updated")
     @Expose
     private String updated;
-    @SerializedName("title")
-    @Expose
-    private String title;
-    @SerializedName("content")
-    @Expose
-    private String content;
-    @SerializedName("user")
-    @Expose
-    private User user;
 
     public Integer getId() {
         return id;
@@ -46,7 +34,7 @@ public class Data implements Serializable {
         return username;
     }
 
-    public Object getPassword() {
+    public String getPassword() {
         return password;
     }
 
@@ -62,15 +50,5 @@ public class Data implements Serializable {
         return updated;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public User getUser() {
-        return user;
-    }
 }
+

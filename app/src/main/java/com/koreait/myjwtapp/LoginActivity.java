@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.koreait.myjwtapp.databinding.ActivityLoginBinding;
 import com.koreait.myjwtapp.repository.JwtService;
 import com.koreait.myjwtapp.repository.models.request.ReqLogin;
 import com.koreait.myjwtapp.repository.models.response.ResLogin;
@@ -27,22 +28,24 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
+    ActivityLoginBinding binding;
     static final String TAG = LoginActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        EditText loginEt = findViewById(R.id.loginEt);
-        EditText passwordEt = findViewById(R.id.passwordEt);
-        Button loginBtn = findViewById(R.id.loginBtn);
-        TextView moveLoginTv = findViewById(R.id.moveLoginTv);
+//        EditText loginEt = findViewById(R.id.loginEt);
+//        EditText passwordEt = findViewById(R.id.passwordEt);
+//        Button loginBtn = findViewById(R.id.loginBtn);
+//        TextView moveLoginTv = findViewById(R.id.moveLoginTv);
 
-        loginBtn.setOnClickListener(view -> {
+        binding.loginBtn.setOnClickListener(view -> {
 
-            String id = loginEt.getText().toString();
-            String pw = passwordEt.getText().toString();
+            String id = binding.loginEt.getText().toString();
+            String pw = binding.passwordEt.getText().toString();
 
             KeyboardUtil.hideKeyboard(view.getContext(), view);
 
@@ -88,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        moveLoginTv.setOnClickListener(view -> {
+        binding.moveLoginTv.setOnClickListener(view -> {
             Intent intent = new Intent(this, SignupActivity.class);
             startActivity(intent);
         });

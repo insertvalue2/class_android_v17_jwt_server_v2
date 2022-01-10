@@ -3,16 +3,9 @@ package com.koreait.myjwtapp.repository.models.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.koreait.myjwtapp.repository.models.response.common.Data;
+import com.koreait.myjwtapp.repository.models.response.common.Result;
 
-public class ResSignup {
-
-    @SerializedName("code")
-    @Expose
-    private Integer code;
-
-    @SerializedName("msg")
-    @Expose
-    private String msg;
+public class ResSignup extends Result {
 
     @SerializedName("data")
     @Expose
@@ -22,7 +15,4 @@ public class ResSignup {
         return data;
     }
 
-    public String getMsg() {
-        return msg;
-    }
 }

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.koreait.myjwtapp.adapter.BlogListAdapter;
+import com.koreait.myjwtapp.interfaces.OnBlogListRefresh;
 import com.koreait.myjwtapp.repository.JwtService;
 import com.koreait.myjwtapp.repository.models.response.ResPost;
 
@@ -32,9 +33,10 @@ public class BlogListFragment extends Fragment {
     private BlogListAdapter adapter;
 
     private SwipeRefreshLayout swipeRefreshLayout;
+    public OnBlogListRefresh onBlogListRefresh;
 
-    public BlogListFragment() {
-        // Required empty public constructor
+    public BlogListFragment(OnBlogListRefresh onBlogListRefresh) {
+        this.onBlogListRefresh = onBlogListRefresh;
     }
 
 
@@ -76,7 +78,9 @@ public class BlogListFragment extends Fragment {
 
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
                 adapter = new BlogListAdapter(getContext());
-                adapter.setItemData(resPost.data);
+                adapter.setItemData(resPost.getListData());
+                // todo
+                adapter.setOnBlogListRefresh(onBlogListRefresh);
 
                 recyclerView.hasFixedSize();
                 recyclerView.setLayoutManager(layoutManager);

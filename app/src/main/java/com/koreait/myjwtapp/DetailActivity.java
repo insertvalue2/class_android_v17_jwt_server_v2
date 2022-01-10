@@ -1,12 +1,9 @@
 package com.koreait.myjwtapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,14 +11,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
+import com.koreait.myjwtapp.databinding.ActivityDetailBinding;
+import com.koreait.myjwtapp.databinding.ActivitySignup2Binding;
 import com.koreait.myjwtapp.interfaces.OnBlogListRefresh;
 import com.koreait.myjwtapp.repository.JwtService;
 import com.koreait.myjwtapp.repository.models.request.ReqPost;
-import com.koreait.myjwtapp.repository.models.response.ResPost;
 import com.koreait.myjwtapp.repository.models.response.ResUpdatePost;
+import com.koreait.myjwtapp.repository.models.response.common.Data;
 import com.koreait.myjwtapp.repository.models.response.common.Result;
+import com.koreait.myjwtapp.repository.models.response.common.User;
 import com.koreait.myjwtapp.utils.BlogUtil;
 import com.koreait.myjwtapp.utils.OnSingleClickListener;
 
@@ -39,17 +42,18 @@ public class DetailActivity extends AppCompatActivity {
     private Button blogUpdateOkBtn;
     private JwtService jwtService;
 
-    private ResPost.Data data;
+    private Data data;
     private String myId;
     private OnBlogListRefresh onBlogListRefresh;
 
+    private ActivityDetailBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
         if (getIntent() != null) {
-            data = (ResPost.Data) getIntent().getSerializableExtra("postData");
+            data = (Data) getIntent().getSerializableExtra("postData");
             initData();
             setData();
             addEventListener();
@@ -72,10 +76,10 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void setData() {
-        detailTitleEt.setText(data.title);
-        detailContentEt.setText(data.content);
+        detailTitleEt.setText(data.getTitle());
+        detailContentEt.setText(data.getContent());
 
-        if (myId.equals(data.user.id.toString())) {
+        if (myId.equals(data.getUser().getId().toString())) {
             bolgUpdateBtn.setVisibility(View.VISIBLE);
             blogDeleteBtn.setVisibility(View.VISIBLE);
         } else {
@@ -115,12 +119,17 @@ public class DetailActivity extends AppCompatActivity {
                 ReqPost reqPost = new ReqPost(detailTitleEt.getText().toString(),
                         detailContentEt.getText().toString());
 
-                jwtService.updatePost(BlogUtil.getToken(v.getContext()), reqPost, data.id).enqueue(new Callback<ResUpdatePost>() {
+                jwtService.updatePost(BlogUtil.getToken(v.getContext()), reqPost, data.getId()).enqueue(new Callback<ResUpdatePost>() {
                     @Override
                     public void onResponse(Call<ResUpdatePost> call, Response<ResUpdatePost> response) {
                         ResUpdatePost resUpdatePost = response.body();
                         if (resUpdatePost != null) {
-                            Snackbar.make(v, resUpdatePost.msg, Snackbar.LENGTH_SHORT).show();
+
+//                            Snackbar.make(v, resUpdatePost.getMsg(), Snackbar.LENGTH_SHORT).show();
+                            Intent intent = new Intent();
+                            intent.putExtra("msg", resUpdatePost.getMsg());
+                            setResult(Activity.RESULT_OK, intent);
+                            finish();
                         }
                     }
 
@@ -135,7 +144,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void requestDeletePost(View view, Context context) {
-        jwtService.deletePost(BlogUtil.getToken(context), data.id).enqueue(new Callback<Result>() {
+        jwtService.deletePost(BlogUtil.getToken(context), data.getId()).enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
                 Snackbar.make(view, response.body().getMsg(), Snackbar.LENGTH_SHORT).show();
